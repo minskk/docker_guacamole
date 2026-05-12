@@ -48,14 +48,20 @@ services:
         condition: service_healthy
       guacd:
         condition: service_started
+    # Шаблон конфигурации: при старте копируется в рабочий GUACAMOLE_HOME внутри контейнера
+    # (см. https://guacamole.apache.org/doc/gug/guacamole-docker.html#custom-extensions-and-guacamole_home )
     environment:
+      GUACAMOLE_HOME: /opt/guacamole-config
       WEBAPP_CONTEXT: ROOT
       GUACD_HOSTNAME: guacd
       MYSQL_HOSTNAME: mariadb
-      MYSQL_DRIVER: mariadb
+      # В образе есть MySQL Connector/J; MariaDB Connector/J при MYSQL_DRIVER=mariadb в образе нет — падает UnpooledDataSource
+      MYSQL_DRIVER: mysql
       MYSQL_DATABASE: guacamole_db
       MYSQL_USERNAME: guacamole_user
       MYSQL_PASSWORD: ${GUAC_DB_PASSWORD:-changeme_guac}
+    volumes:
+      - ./config:/opt/guacamole-config:ro
     ports:
       - "8080:8080"
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  user-mapping.xml — встроенный файловый провайдер (см. configuring-guacamole, раздел user-mapping.xml):
+  https://guacamole.apache.org/doc/gug/configuring-guacamole.html#user-mapping-xml
+
+  С MariaDB/JDBC учётные записи веб-входа (guacadmin и др.) хранятся в БД. Этот файл всё равно
+  подхватывается провайдером «по умолчанию» и идёт последним по приоритету — сюда можно
+  добавить <authorize> с логином/паролем и описанием подключений (protocol/connection).
+
+  Образ при старте копирует GUACAMOLE_HOME в рабочий каталог: после правок на диске хоста
+  выполните: docker compose restart guacamole
+-->
+<user-mapping>
+    <!-- Пример (раскомментируйте и замените хост/пароли):
+    <authorize username="local" password="CHANGE_ME">
+        <protocol>ssh</protocol>
+        <param name="hostname">192.168.1.10</param>
+        <param name="port">22</param>
+        <param name="username">sshuser</param>
+    </authorize>
+    -->
+</user-mapping>
