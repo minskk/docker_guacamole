@@ -1,0 +1,14 @@
+{
+  "guacamoleVersion": "1.6.0",
+  "name": "Login window customization",
+  "namespace": "local-login-branding",
+  "css": ["css/login-custom.css"],
+  "html": ["html/login-notice.html"],
+  "translations": [
+    "translations/en.json",
+    "translations/ru.json"
+  ],
+  "resources": {
+    "src/img/vashid_logo.png": "image/png"
+  }
+}

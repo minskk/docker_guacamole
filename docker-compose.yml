@@ -48,8 +48,8 @@ services:
         condition: service_healthy
       guacd:
         condition: service_started
-    # Шаблон конфигурации: при старте копируется в рабочий GUACAMOLE_HOME внутри контейнера
-    # (см. https://guacamole.apache.org/doc/gug/guacamole-docker.html#custom-extensions-and-guacamole_home )
+    # Шаблон: user-mapping.xml, translations, и JAR расширений в config/extensions/
+    # (брендинг окна входа: см. branding/ + scripts/build-branding-jar.sh, документация guacamole-ext)
     environment:
       GUACAMOLE_HOME: /opt/guacamole-config
       WEBAPP_CONTEXT: ROOT
@@ -64,6 +64,19 @@ services:
       - ./config:/opt/guacamole-config:ro
     ports:
       - "8080:8080"
+
+  # Веб-UI для MariaDB: http://127.0.0.1:8081/ (образ https://hub.docker.com/_/adminer )
+  adminer:
+    image: adminer:4
+    restart: unless-stopped
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      ADMINER_DESIGN: lucas-sandery
+      ADMINER_DEFAULT_SERVER: mariadb
+    ports:
+      - "8081:8080"
 
 volumes:
   mariadb-data:

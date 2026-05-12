@@ -1,0 +1,39 @@
+/*
+ * Стили применяются после стандартных тем Guacamole.
+ * Логотип: ресурс из JAR, URL = app/ext/<namespace>/<путь из guac-manifest "resources">
+ * https://guacamole.apache.org/doc/gug/guacamole-ext.html
+ */
+.login-dialog-middle .login-dialog {
+    border-radius: 8px;
+}
+
+.login-ui .login-dialog .logo {
+    display: block;
+    margin: .5em auto;
+    width: 3em;
+    height: 3em;
+    background-size: 3em 3em;
+    -moz-background-size: 3em 3em;
+    -webkit-background-size: 3em 3em;
+    -khtml-background-size: 3em 3em;
+    background-image: url("app/ext/local-login-branding/src/img/vashid_logo.png");
+}
+
+.login-ui .login-dialog .buttons input.login,
+.login-ui .login-dialog .buttons input.continue-login {
+    background-color: #20398e;
+    border-color: #20398e;
+    color: #fff;
+}
+
+.login-ui .login-dialog .buttons input.login:hover:not(:disabled),
+.login-ui .login-dialog .buttons input.continue-login:hover:not(:disabled) {
+    background-color: #1a3075;
+    border-color: #1a3075;
+    color: #fff;
+}
+
+.login-ui .login-dialog .buttons input.login:disabled,
+.login-ui .login-dialog .buttons input.continue-login:disabled {
+    opacity: 0.55;
+}
