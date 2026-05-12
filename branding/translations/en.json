@@ -1,5 +1,7 @@
 {
   "APP": {
-    "NAME": "Vash ID"
+    "NAME": "Vash ID",
+    "INFO_LOGGED_OUT": "You have been signed out.",
+    "ACTION_LOGIN_AGAIN": "Sign in again"
   }
 }

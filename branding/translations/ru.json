@@ -1,5 +1,7 @@
 {
   "APP": {
-    "NAME": "Ваш ID"
+    "NAME": "Ваш ID",
+    "INFO_LOGGED_OUT": "Вы вышли из системы.",
+    "ACTION_LOGIN_AGAIN": "Войти снова"
   }
 }
