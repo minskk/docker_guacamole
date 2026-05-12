@@ -9,6 +9,7 @@ services:
   # Одноразовое копирование SQL из образа guacamole в volume для mariadb/docker-entrypoint-initdb.d
   guacamole-schema:
     image: guacamole/guacamole:1.6.0
+    user: "0:0" # named volume принадлежит root; без этого cp из-под пользователя образа даёт Permission denied
     restart: "no"
     volumes:
       - guacamole-initdb:/schema
@@ -48,6 +49,7 @@ services:
       guacd:
         condition: service_started
     environment:
+      WEBAPP_CONTEXT: ROOT
       GUACD_HOSTNAME: guacd
       MYSQL_HOSTNAME: mariadb
       MYSQL_DRIVER: mariadb
