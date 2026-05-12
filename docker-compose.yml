@@ -13,10 +13,11 @@ services:
     restart: "no"
     volumes:
       - guacamole-initdb:/schema
+      - ./config/mariadb-init:/extra-init:ro
     entrypoint:
       - /bin/sh
       - -c
-      - cp -a /opt/guacamole/extensions/guacamole-auth-jdbc/mysql/schema/. /schema/
+      - cp -a /opt/guacamole/extensions/guacamole-auth-jdbc/mysql/schema/. /schema/ && find /extra-init -maxdepth 1 -name '*.sql' -type f -exec cp -t /schema/ {} +
 
   mariadb:
     image: mariadb:11.6

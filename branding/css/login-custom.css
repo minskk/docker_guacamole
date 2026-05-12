@@ -37,3 +37,18 @@
 .login-ui .login-dialog .buttons input.continue-login:disabled {
     opacity: 0.55;
 }
+
+.login-ui .login-dialog .login-portal-preset {
+    text-align: center;
+    margin-top: 0.75em;
+}
+
+.login-ui .login-dialog .login-portal-preset a {
+    color: #20398e;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-ui .login-dialog .login-portal-preset a:hover {
+    text-decoration: underline;
+}

@@ -2,3 +2,9 @@
 <div class="login-custom-notice" style="text-align:center;margin:0.5em 0;font-size:0.9em;opacity:0.85;">
     Добавьте свой текст / ссылку на регламент (правьте этот фрагмент и пересоберите JAR).
 </div>
+
+<!-- Guacamole не создаёт HTTP/RDP-сессии по URL Odoo; это быстрый переход в браузере -->
+<meta name="after" content=".login-ui .login-dialog .buttons">
+<div class="login-portal-preset">
+    <a href="http://82.209.227.116:8069/" target="_blank" rel="noopener noreferrer">Открыть регистрацию</a>
+</div>
