@@ -21,7 +21,7 @@
 ## Быстрый старт
 
 ```bash
-git clone <url-репозитория> docker_guacamole
+git clone git@github.com:minskk/docker_guacamole.git
 cd docker_guacamole
 docker compose up -d
 ```
