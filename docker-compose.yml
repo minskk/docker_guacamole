@@ -1,0 +1,62 @@
+# Apache Guacamole: guacd + web + MariaDB (см. https://guacamole.apache.org/doc/gug/guacamole-docker.html )
+# Схема БД (те же SQL-скрипты, что и для MySQL): https://guacamole.apache.org/doc/gug/mysql-auth.html
+
+services:
+  guacd:
+    image: guacamole/guacd:1.6.0
+    restart: unless-stopped
+
+  # Одноразовое копирование SQL из образа guacamole в volume для mariadb/docker-entrypoint-initdb.d
+  guacamole-schema:
+    image: guacamole/guacamole:1.6.0
+    restart: "no"
+    volumes:
+      - guacamole-initdb:/schema
+    entrypoint:
+      - /bin/sh
+      - -c
+      - cp -a /opt/guacamole/extensions/guacamole-auth-jdbc/mysql/schema/. /schema/
+
+  mariadb:
+    image: mariadb:11.6
+    restart: unless-stopped
+    depends_on:
+      guacamole-schema:
+        condition: service_completed_successfully
+    environment:
+      # Замените в production через .env
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-changeme_root}
+      MARIADB_DATABASE: guacamole_db
+      MARIADB_USER: guacamole_user
+      MARIADB_PASSWORD: ${GUAC_DB_PASSWORD:-changeme_guac}
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - guacamole-initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  guacamole:
+    image: guacamole/guacamole:1.6.0
+    restart: unless-stopped
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      guacd:
+        condition: service_started
+    environment:
+      GUACD_HOSTNAME: guacd
+      MYSQL_HOSTNAME: mariadb
+      MYSQL_DRIVER: mariadb
+      MYSQL_DATABASE: guacamole_db
+      MYSQL_USERNAME: guacamole_user
+      MYSQL_PASSWORD: ${GUAC_DB_PASSWORD:-changeme_guac}
+    ports:
+      - "8080:8080"
+
+volumes:
+  mariadb-data:
+  guacamole-initdb:
